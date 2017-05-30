@@ -1,11 +1,13 @@
 package ru.wwcompany.corparativerecorder;
 
 import android.media.MediaRecorder;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import java.util.Locale;
+
+import ru.wwcompany.corparativerecorder.Service.TCPClient;
 
 public class MainActivity extends AppCompatActivity {
     CallRecord callRecord;
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         callRecord = new CallRecord.Builder(this)
                 .setRecordFileName("Record_" + new java.text.SimpleDateFormat("ddMMyyyyHHmmss", Locale.US).format(new java.util.Date()))
                 .setRecordDirName("CallRecord")
@@ -26,5 +29,9 @@ public class MainActivity extends AppCompatActivity {
         App.setCallRecord(callRecord);
         callRecord.startCallRecordService();
         callRecord.startCallReceiver();
+
+        App.setContext(this);
+        TCPClient tcpClient = new TCPClient();
+        App.setTcpClient(tcpClient);
     }
 }

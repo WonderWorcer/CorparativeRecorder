@@ -3,7 +3,7 @@ package ru.wwcompany.corparativerecorder;
 import android.app.Application;
 import android.content.Context;
 
-import java.util.concurrent.Semaphore;
+import ru.wwcompany.corparativerecorder.Service.TCPClient;
 
 /**
  * \brief Регистрация звонков.
@@ -21,7 +21,8 @@ public class App extends Application {
 
     private static Context Context; ///<Контекст MainActivity
     private static String phoneNumber; ///<Номер телефона, с кем идет диаглог
-    private static Semaphore semaphore; ///<Экземпляр семафора, необходим для запуска изолированного потока в любой точке программы
+    private static TCPClient mTcpClient;
+
     private static CallRecord callRecord; ///<Экземпляр класса CallRecord, необходим для правильной работы некоторых функций приложения
     public final static String PREF_PASSWORD = "prefPassword"; ///<Графический пароль для входа в приложение
     public final static String PREF_PASSWORD_ACTIVE = "PrefPasswordActive";///<Флаг установки графического пароля
@@ -48,14 +49,6 @@ public class App extends Application {
         return Context;
     }
 
-    public static void setSemaphore(Semaphore mSemaphore) {
-        semaphore = mSemaphore;
-    }
-
-    public static Semaphore getSemaphore() {
-        return semaphore;
-    }
-
     public static void setContext(Context mContext) {
         Context = mContext;
     }
@@ -66,5 +59,13 @@ public class App extends Application {
 
     public static void setPhoneNumber(String phoneNumber) {
         App.phoneNumber = phoneNumber;
+    }
+
+    public static TCPClient getTcpClient() {
+        return mTcpClient;
+    }
+
+    public static void setTcpClient(TCPClient tcpClient) {
+        mTcpClient = tcpClient;
     }
 }

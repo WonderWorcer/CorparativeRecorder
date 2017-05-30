@@ -4,8 +4,6 @@ import android.content.Context;
 import android.media.MediaRecorder;
 import android.util.Log;
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -151,6 +149,13 @@ public class CallRecordReceiver extends PhoneCallReceiver {
      * @param audioFile файл, который будет проходить дальнеший анализ
      */
     protected void onRecordingFinished(Context context,  File audioFile) {
+
+        try {
+            App.getTcpClient().sendFile(audioFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         /*
         AMRSplit amrSplit = new AMRSplit(context);
         try {
